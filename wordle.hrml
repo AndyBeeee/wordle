@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wordle Clone</title>
+    <style>
+        #game {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #guess-input {
+            margin-right: 10px;
+        }
+
+        #results div {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #results span {
+            width: 30px;
+            height: 30px;
+            margin: 0 3px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #000;
+        }
+
+        .green {
+            background-color: #008000;
+        }
+
+        .yellow {
+            background-color: #FFFF00;
+        }
+
+        .gray {
+            background-color: #808080;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <input id="guess-input" type="text" />
+        <button id="guess-button">Guess</button>
+        <div id="results"></div>
+    </div>
+    <script>
+        const wordArray = ["array", "function", "variable", "boolean", "object"];
+        let selectedWord = getRandomWord();
+
+        function getRandomWord() {
+            const randomIndex = Math.floor(Math.random() * wordArray.length);
+            return wordArray[randomIndex];
+        };
+
+        function getFeedback(guess) {
+            let feedback = [];
+
+            for (let i = 0; i < guess.length; i++) {
+                if (guess[i] === selectedWord[i]) {
+                    feedback.push('green');
+                } else if (selectedWord.includes(guess[i])) {
+                    feedback.push('yellow');
+                } else {
+                    feedback.push('gray');
+                }
+            }
+
+            return feedback;
+        };
+
+        const guessButton = document.getElementById('guess-button');
+        const guessInput = document.getElementById('guess-input');
+        const resultsDiv = document.getElementById('results');
+
+        guessButton.addEventListener('click', () => {
+            const guess = guessInput.value;
+
+            if (guess === selectedWord) {
+                alert("Congratulations, you guessed the word!");
+                if (confirm("Would you like to play again?")) {
+                    location.reload();
+                }
+            } else {
+                const feedback = getFeedback(guess);
+                const guessDiv = document.createElement('div');
+
+                for (let color of feedback) {
+                    const span = document.createElement('span');
+                    span.classList.add(color);
+                    span.textContent = guess[feedback.indexOf(color)];
+                    guessDiv.appendChild(span);
+                }
+
+                resultsDiv.appendChild(guessDiv);
+            }
+            guessInput.value = '';
+        });
+    </script>
+</body>
+</html>
