@@ -29,13 +29,7 @@
             height: 60px;
         }
 
-        #results div {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        #results span {
+        #alphabet span, #results div span, #spaces div span {
             width: 60px;
             height: 60px;
             margin: 0 5px;
@@ -44,6 +38,19 @@
             border: 1px solid #000;
             font-size: 36px;
             text-transform: uppercase;
+        }
+
+        #alphabet span {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 28px;
+        }
+
+        #results div, #spaces div, #alphabet {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
         }
 
         .green {
@@ -61,11 +68,8 @@
 </head>
 <body>
     <div id="game">
-        <div>
-            <span class="green">Green: Letter is correct and in the correct position</span><br>
-            <span class="yellow">Yellow: Letter is correct but in the wrong position</span><br>
-            <span class="gray">Gray: Letter is not in the word</span><br>
-        </div>
+        <div id="alphabet"></div>
+        <div id="spaces"></div>
         <input id="guess-input" type="text" />
         <button id="guess-button">Guess</button>
         <div id="results"></div>
@@ -73,6 +77,8 @@
     <script>
         const wordArray = ["array", "function", "variable", "boolean", "object"];
         let selectedWord = getRandomWord();
+        displayAlphabet();
+        displaySpaces();
 
         function getRandomWord() {
             const randomIndex = Math.floor(Math.random() * wordArray.length);
@@ -95,12 +101,31 @@
             return feedback;
         };
 
+        function displayAlphabet() {
+            const alphabetDiv = document.getElementById('alphabet');
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+            for (let letter of alphabet) {
+                const span = document.createElement('span');
+                span.textContent = letter;
+                alphabetDiv.appendChild(span);
+            }
+        };
+
+        function displaySpaces() {
+            const spacesDiv = document.getElementById('spaces');
+            for (let i = 0; i < selectedWord.length; i++) {
+                const span = document.createElement('span');
+                spacesDiv.appendChild(span);
+            }
+        };
+
         const guessButton = document.getElementById('guess-button');
         const guessInput = document.getElementById('guess-input');
         const resultsDiv = document.getElementById('results');
 
         guessButton.addEventListener('click', () => {
-            const guess = guessInput.value;
+            const guess = guessInput.value.toLowerCase();
 
             if (guess.length !== selectedWord.length) {
                 alert(`Please enter a ${selectedWord.length} letter word.`);
@@ -121,10 +146,17 @@
                     span.classList.add(feedback[i]);
                     span.textContent = guess[i];
                     guessDiv.appendChild(span);
+
+                    if (feedback[i] !== 'gray') {
+                        const alphabetDiv = document.getElementById('alphabet');
+                        const alphabetSpan = alphabetDiv.childNodes[guess.charCodeAt(i) - 97];
+                        alphabetSpan.classList.add(feedback[i]);
+                    }
                 }
 
                 resultsDiv.appendChild(guessDiv);
             }
+
             guessInput.value = '';
         });
     </script>
