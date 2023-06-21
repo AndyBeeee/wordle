@@ -52,6 +52,10 @@
             background-color: #008000;
         }
 
+        .yellow {
+            background-color: #FFFF00;
+        }
+
         .gray {
             background-color: #808080;
         }
@@ -82,7 +86,7 @@
                 if (guess[i] === selectedWord[i]) {
                     feedback.push('green');
                 } else if (selectedWord.includes(guess[i])) {
-                    feedback.push('gray');
+                    feedback.push('yellow');
                 } else {
                     feedback.push('gray');
                 }
@@ -161,6 +165,7 @@
             // Clear current guess spaces for the next guess
             for (let i = 0; i < spacesDiv.childNodes.length; i++) {
                 spacesDiv.childNodes[i].textContent = '';
+                spacesDiv.childNodes[i].className = '';
             }
         });
     </script>
