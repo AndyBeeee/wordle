@@ -2,9 +2,15 @@
 <html>
 <head>
     <title>Wordle Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+        }
+
         #game {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             text-align: center;
@@ -12,21 +18,31 @@
 
         #guess-input {
             margin-right: 10px;
+            font-size: 18px;
+            width: 200px;
+            height: 40px;
         }
 
-        #results div {
+        #guess-button {
+            font-size: 18px;
+            width: 100px;
+            height: 40px;
+        }
+
+        #results div, #spaces div {
             display: flex;
             justify-content: center;
             margin-top: 10px;
         }
 
-        #results span {
-            width: 30px;
-            height: 30px;
-            margin: 0 3px;
-            line-height: 30px;
+        #results span, #spaces span {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            line-height: 50px;
             text-align: center;
             border: 1px solid #000;
+            font-size: 24px;
         }
 
         .green {
@@ -44,6 +60,7 @@
 </head>
 <body>
     <div id="game">
+        <div id="spaces"></div>
         <input id="guess-input" type="text" />
         <button id="guess-button">Guess</button>
         <div id="results"></div>
@@ -51,6 +68,7 @@
     <script>
         const wordArray = ["array", "function", "variable", "boolean", "object"];
         let selectedWord = getRandomWord();
+        displaySpaces();
 
         function getRandomWord() {
             const randomIndex = Math.floor(Math.random() * wordArray.length);
@@ -71,6 +89,15 @@
             }
 
             return feedback;
+        };
+
+        function displaySpaces() {
+            const spacesDiv = document.getElementById('spaces');
+            for (let i = 0; i < selectedWord.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = '_';
+                spacesDiv.appendChild(span);
+            }
         };
 
         const guessButton = document.getElementById('guess-button');
