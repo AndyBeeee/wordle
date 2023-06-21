@@ -1,3 +1,4 @@
+Copy code
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +7,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         #game {
@@ -18,15 +19,15 @@
 
         #guess-input {
             margin-right: 10px;
-            font-size: 18px;
-            width: 200px;
-            height: 40px;
+            font-size: 20px;
+            width: 250px;
+            height: 50px;
         }
 
         #guess-button {
-            font-size: 18px;
-            width: 100px;
-            height: 40px;
+            font-size: 20px;
+            width: 150px;
+            height: 50px;
         }
 
         #results div, #spaces div {
@@ -36,13 +37,13 @@
         }
 
         #results span, #spaces span {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             margin: 0 5px;
-            line-height: 50px;
+            line-height: 60px;
             text-align: center;
             border: 1px solid #000;
-            font-size: 24px;
+            font-size: 28px;
         }
 
         .green {
@@ -60,6 +61,11 @@
 </head>
 <body>
     <div id="game">
+        <div>
+            <span class="green">Green: Letter is correct and in the correct position</span><br>
+            <span class="yellow">Yellow: Letter is correct but in the wrong position</span><br>
+            <span class="gray">Gray: Letter is not in the word</span><br>
+        </div>
         <div id="spaces"></div>
         <input id="guess-input" type="text" />
         <button id="guess-button">Guess</button>
@@ -95,7 +101,6 @@
             const spacesDiv = document.getElementById('spaces');
             for (let i = 0; i < selectedWord.length; i++) {
                 const span = document.createElement('span');
-                span.textContent = '_';
                 spacesDiv.appendChild(span);
             }
         };
